@@ -1,7 +1,3 @@
-// Copyright 2019-2024 Tauri Programme within The Commons Conservancy
-// SPDX-License-Identifier: Apache-2.0
-// SPDX-License-Identifier: MIT
-
 use tauri::{
   menu::{Menu, MenuItem},
   tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
@@ -25,7 +21,7 @@ pub fn create_tray<R: Runtime>(app: &tauri::AppHandle<R>) -> tauri::Result<()> {
         app.exit(0);
       }
       "setting" => {
-        let _webview = WebviewWindowBuilder::new(app, "main-setting", WebviewUrl::default())
+        let _webview = WebviewWindowBuilder::new(app, "setting", WebviewUrl::default())
           .title("设置")
           .build()
           .unwrap();
