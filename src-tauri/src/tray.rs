@@ -4,9 +4,10 @@
 
 use tauri::{
   menu::{Menu, MenuItem},
-  tray::{ClickType, TrayIconBuilder},
+  tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
   Manager, Runtime, WebviewUrl, WebviewWindowBuilder,
 };
+use tauri::Listener;
 
 pub fn create_tray<R: Runtime>(app: &tauri::AppHandle<R>) -> tauri::Result<()> {
   let w_setting = MenuItem::with_id(app, "setting", "设置", true, None::<&str>)?;
@@ -32,7 +33,12 @@ pub fn create_tray<R: Runtime>(app: &tauri::AppHandle<R>) -> tauri::Result<()> {
       _ => {}
     })
     .on_tray_icon_event(|tray, event| {
-      if event.click_type == ClickType::Left {
+      if let TrayIconEvent::Click {
+        button: MouseButton::Left,
+        button_state: MouseButtonState::Up,
+        ..
+      } = event
+      {
         let app = tray.app_handle();
         if let Some(window) = app.get_webview_window("main") {
           let _ = window.show();

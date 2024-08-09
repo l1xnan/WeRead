@@ -2,19 +2,18 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "run-app",
   "description": "permissions to run the app",
-  "windows": [
-    "main",
-    "main-*",
-    "debug*"
-  ],
+  "windows": ["main", "weread", "*"],
+  "remote": {
+    "urls": ["https://*.qq.com"]
+  },
   "permissions": [
-    "path:default",
-    "event:default",
-    "app:default",
-    "window:allow-minimize",
-    "window:allow-toggle-maximize",
-    "window:allow-close",
-    "window:allow-start-dragging",
+    "core:path:default",
+    "core:event:default",
+    "core:app:default",
+    "core:window:allow-minimize",
+    "core:window:allow-toggle-maximize",
+    "core:window:allow-close",
+    "core:window:allow-start-dragging",
     "store:allow-save",
     "store:allow-get",
     "store:allow-set"

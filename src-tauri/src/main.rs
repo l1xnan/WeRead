@@ -5,6 +5,7 @@
 
 mod tray;
 
+use tauri::Listener;
 use tauri_plugin_store::StoreBuilder;
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
@@ -71,7 +72,7 @@ fn main() {
 
       win.show().unwrap();
 
-      let id = win.listen("location", |event| {
+      let id = win.listen_any("location", |event| {
         println!("got location with payload {:?}", event.payload());
       });
 
