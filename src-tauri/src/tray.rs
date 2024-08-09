@@ -3,7 +3,6 @@ use tauri::{
   tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
   Manager, Runtime, WebviewUrl, WebviewWindowBuilder,
 };
-use tauri::Listener;
 
 pub fn create_tray<R: Runtime>(app: &tauri::AppHandle<R>) -> tauri::Result<()> {
   let w_setting = MenuItem::with_id(app, "setting", "设置", true, None::<&str>)?;
