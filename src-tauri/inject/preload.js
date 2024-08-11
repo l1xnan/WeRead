@@ -173,21 +173,17 @@ window.addEventListener("load", async (_event) => {
   });
 
   // 添加监听
-  document
-    .getElementById("__setting__")
-    ?.addEventListener("click", async () => {
+  const events = {
+    __setting__: async () => {
       await invoke("create_setting", {});
-    });
-
-  // 添加监听
-  document
-    .getElementById("widthIncrease")
-    ?.addEventListener("click", () => changeWidth(true));
-  document
-    .getElementById("widthDecrease")
-    ?.addEventListener("click", () => changeWidth(false));
-
-  document.getElementById("controlScroll")?.addEventListener("click", () => {
+    },
+    widthIncrease: () => {
+      changeWidth(true);
+    },
+    widthDecrease: () => {
+      changeWidth(false);
+    },
+    controlScroll: () => {
     isScrolling = !isScrolling;
     if (isScrolling) {
       document.getElementById("autoScroll").style.display = "block";
@@ -211,9 +207,8 @@ window.addEventListener("load", async (_event) => {
     }
     store.set("is-scrolling", isScrolling);
     store.save();
-  });
-
-  document.getElementById("autoScroll")?.addEventListener("click", () => {
+    },
+    autoScroll: () => {
     scrollSpeed++;
     if (scrollSpeed > 10) {
       scrollSpeed = 1;
@@ -222,6 +217,11 @@ window.addEventListener("load", async (_event) => {
     store.set("scroll-speed", scrollSpeed);
 
     store.save();
+    },
+  };
+
+  Object.entries(events).forEach(([id, func]) => {
+    document.getElementById(id)?.addEventListener("click", func);
   });
 
   // 下划隐藏顶栏，上划显示顶栏
