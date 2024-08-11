@@ -45,7 +45,11 @@ html body.wr_whiteTheme,
 .wr_whiteTheme .readerTopBar,
 .wr_whiteTheme .readerBottomBar,
 .wr_whiteTheme .readerBottomSettingPanel,
-.wr_whiteTheme .recommend_preview_item {
+.wr_whiteTheme .recommend_preview_item,
+/* 双栏阅读 */
+.wr_whiteTheme .wr_horizontalReader .wr_horizontalReader_app_content,
+.wr_whiteTheme .wr_horizontalReader .readerChapterContent_container,
+.wr_whiteTheme .wr_horizontalReader .readerChapterContent {
   background-color: #f9f3e8 !important;
 }
 
