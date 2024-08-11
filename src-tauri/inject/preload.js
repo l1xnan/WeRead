@@ -71,17 +71,15 @@ window.addEventListener("load", async (_event) => {
   <button id="__setting__" class="navBar_link">设置</button>
   `;
 
-  document
-    .querySelector(".readerControls")
-    ?.insertAdjacentHTML("beforeend", btnControls);
+  const elements = [
+    { className: ".readerControls", element: btnControls },
+    { className: ".navBar_inner", element: btnSetting1 },
+    { className: ".readerTopBar_right", element: btnSetting },
+  ];
 
-  document
-    .querySelector(".navBar_inner")
-    ?.insertAdjacentHTML("beforeend", btnSetting1);
-
-  document
-    .querySelector(".readerTopBar_right")
-    ?.insertAdjacentHTML("beforeend", btnSetting);
+  elements.forEach(({ className, element }) => {
+    document.querySelector(className)?.insertAdjacentHTML("beforeend", element);
+  });
 
   // 添加监听
   document

@@ -110,6 +110,9 @@ fn main() {
 
       win.show().unwrap();
 
+      #[cfg(debug_assertions)]
+      win.open_devtools();
+
       let id = win.listen_any("location", |event| {
         println!("got location with payload {:?}", event.payload());
       });
