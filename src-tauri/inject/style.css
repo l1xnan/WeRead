@@ -62,7 +62,8 @@ html body.wr_whiteTheme,
 
 /* 隐藏元素 */
 .readerMemberCardTips,
-.readerControls_item.download /* 下载App按钮 */ {
+.readerControls_item.download ,/* 下载App按钮 */
+.readerControls_item.wetype /* 微信输入法 */ {
   display: none !important;
 }
 
