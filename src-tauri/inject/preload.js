@@ -168,9 +168,17 @@ window.addEventListener("load", async (_event) => {
     { className: ".readerTopBar_right", element: btnSetting },
   ];
 
+  // isHorizontalReader/isNormalReader
+  const isNormalReader = document.querySelector(
+    ".readerControls_item.isNormalReader"
+  );
+  if (isNormalReader) {
   elements.forEach(({ className, element }) => {
-    document.querySelector(className)?.insertAdjacentHTML("beforeend", element);
+      document
+        .querySelector(className)
+        ?.insertAdjacentHTML("beforeend", element);
   });
+  }
 
   // 添加监听
   const events = {

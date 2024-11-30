@@ -4,26 +4,16 @@
 )]
 
 mod tray;
-
 use serde_json::json;
-use tauri::{AppHandle, Listener, Manager, Url, Wry};
-use tauri_plugin_store::{StoreBuilder, StoreCollection};
+use tauri::{AppHandle, Listener, Manager, Url};
+use tauri_plugin_store::StoreExt;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 fn change_route(app: AppHandle, href: &str) -> String {
-  let stores = app.state::<StoreCollection<Wry>>();
-  let path = app.path().data_dir().unwrap().join("settings.json");
-  let mut store = StoreBuilder::new(".settings.json").build(app.clone());
-  let _ = store.load();
-  let _ = store.insert("href".to_string(), json!(href));
-  let _ = store.save();
-
-  // let _ = with_store(app, stores, path, |store| {
-  //   let _ = store.insert("href".to_string(), json!(href));
-  //   store.save()
-  // });
-
+  if let Ok(store) = app.store("settings.json") {
+    let _ = store.set("href".to_string(), json!(href));
+  }
   format!("{}", href)
 }
 
@@ -41,9 +31,11 @@ async fn create_setting(handle: AppHandle) {
 
 #[tauri::command]
 fn get_store(handle: AppHandle, key: &str) -> Option<String> {
-  let mut store = StoreBuilder::new(".settings.json").build(handle.clone());
-  let _ = store.load();
-  store.get(key).map(|t| t.to_string())
+  if let Ok(store) = handle.store(".settings.json") {
+    store.get(key).map(|t| t.to_string())
+  } else {
+    None
+  }
 }
 
 fn inject_style(css: &str) -> String {
@@ -85,18 +77,13 @@ fn main() {
         let payload: Result<Payload, _> = serde_json::from_str(raw);
         println!("got event-name with payload {:?}", payload);
       });
-
-      let mut store = StoreBuilder::new(".settings.json").build(app.handle().clone());
-      let _ = app
-        .handle()
-        .plugin(tauri_plugin_store::Builder::default().build());
-      let _ = store.load();
+      let store = app.store("settings.json")?;
 
       let href = store
         .get("href")
-        .and_then(|v| v.as_str())
-        .map(|s| s.to_string())
-        .unwrap_or("https://weread.qq.com".to_string());
+        .map(|s| s.as_str().map(|s| s.to_string()))
+        .flatten()
+        .unwrap_or(BASE_URL.to_string());
 
       let url = Url::parse(&href).unwrap_or(BASE_URL.parse().unwrap());
 
@@ -110,10 +97,7 @@ fn main() {
 
       win.show().unwrap();
 
-      #[cfg(debug_assertions)]
-      win.open_devtools();
-
-      let id = win.listen_any("location", |event| {
+      let _id = win.listen_any("location", |event| {
         println!("got location with payload {:?}", event.payload());
       });
 

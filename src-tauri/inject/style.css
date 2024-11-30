@@ -77,24 +77,12 @@ html body.wr_whiteTheme,
   display: none !important;
 }
 
-/* 防止图片宽度溢出 */
-/* [class="wr_absolute wr_readerImage_opacity"] {
-  width: 100% !important;
-  height: auto !important;
-} */
-
 pre,
 pre * {
   font-family: Consolas !important;
 }
 
 /* ---------- 控制按钮 ---------- */
-.readerControls_item,
-.readerControls_fontSize,
-.readerControls_fontSize .fontSizeButton {
-  height: 36px;
-  width: 36px;
-}
 
 .readerControls_fontSize:not(:first-child),
 .readerControls_item:not(:first-child) {
